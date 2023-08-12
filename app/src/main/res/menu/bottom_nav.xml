@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Orders"
+        android:id="@+id/orders"
+        android:icon="@drawable/ic_baseline_orders"/>
+
+    <item
+        android:title="Record"
+        android:id="@+id/record"
+        android:icon="@drawable/ic_baseline_record"/>
+
+    <item
+        android:title="Customers"
+        android:id="@+id/customers"
+        android:icon="@drawable/baseline_person_24"/>
+
+    <item
+        android:title="Settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings"/>
+</menu>

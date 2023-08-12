@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_record"
+        android:title="vksnov"
+        android:contentDescription="kj nkj "
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_orders"
+        android:title="dsknvsklv"
+        android:contentDescription="dslkvnv"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:title="sdkvlvm"
+        android:contentDescription="sdkvnslkv"
+        android:iconTintMode="src_atop"
+        android:iconTint="@color/black"
+        app:showAsAction="never" />
+
+</menu>

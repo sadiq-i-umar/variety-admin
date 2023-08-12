@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.VarietyAdmin" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Defining that new color in ColorPrimaryDark -->
+
+    </style>
+    <style name="Theme.MyApp.SplashDark" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/variety_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.VarietyAdmin</item>
+        <item name="windowSplashScreenAnimationDuration">@integer/material_motion_duration_long_1</item>
+
+    </style>
+</resources>
