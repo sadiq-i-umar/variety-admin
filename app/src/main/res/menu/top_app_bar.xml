@@ -6,6 +6,7 @@
         android:title="More"
         android:contentDescription="Click to view more options"
         android:icon="@drawable/baseline_more_vert_24"
+        android:iconTint="@color/black"
         app:showAsAction="never" />
 
 </menu>
