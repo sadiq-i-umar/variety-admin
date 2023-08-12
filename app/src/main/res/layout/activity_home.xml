@@ -21,6 +21,7 @@
             app:menu="@menu/top_app_bar"
             app:titleTextColor="@color/black"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:theme="@style/MyThemeOverlay_Toolbar"
             android:backgroundTint="@color/white"
             />
 

@@ -3,6 +3,11 @@
     <style name="Theme.VarietyAdmin" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textColorSecondary">@color/black</item>
+    </style>
+    <style name="MyThemeOverlay_Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <!-- color used by navigation icon and overflow icon -->
+        <item name="colorOnPrimary">@color/black</item>
     </style>
     <style name="Theme.MyApp.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#FFFFFF</item>
