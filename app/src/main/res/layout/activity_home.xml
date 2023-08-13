@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".activities.HomeActivity"
-    android:background="@drawable/bg_login">
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,12 +17,11 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="App Bar"
             app:menu="@menu/top_app_bar"
             app:titleTextColor="@color/black"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:theme="@style/MyThemeOverlay_Toolbar"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/toolbar_background"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -32,8 +31,7 @@
         android:layout_height="match_parent"
         android:id="@+id/relativeLayout"
         android:layout_marginBottom="65dp"
-        android:layout_below="@id/appBarLayout"
-        android:padding="5dp">
+        android:layout_below="@id/appBarLayout">
 
     </RelativeLayout>
 

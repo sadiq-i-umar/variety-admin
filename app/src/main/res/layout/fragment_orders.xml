@@ -6,12 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.OrdersFragment">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/order_one"
-        android:layout_width="390dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        app:strokeColor="@color/stroke_color"
+        app:strokeWidth="1dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -112,6 +113,114 @@
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/order_one2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_one"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardItemContainer2"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:id="@+id/cardName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sadiq Ibrahim Umar"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardItemQty2"
+                android:textSize="17sp"
+                android:layout_marginTop="3dp"
+                android:textStyle="bold"
+                android:layout_below="@id/cardName2"
+                android:text="5 items" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardOrderTotal2"
+                android:textSize="17sp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/cardItemQty2"
+                android:layout_below="@id/cardName2"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:text="₦5,000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardPaymentStatus2"
+                android:textSize="17sp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@id/cardItemQty2"
+                android:text="Pending"
+                android:textColor="#FF0000"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardFulfillmentStatus2"
+                android:textSize="17sp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/cardPaymentStatus2"
+                android:layout_below="@id/cardItemQty2"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:textColor="#FF0000"
+                android:text="Unfulfilled" />
+
+
+            <ImageView
+                android:id="@+id/calenderIcon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_calendar_month_24"
+                android:layout_toLeftOf="@id/date2"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:id="@+id/date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24 May 2023"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:id="@+id/cardCollectionMode2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                android:textColor="#74343C"
+                android:layout_below="@+id/calenderIcon2"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

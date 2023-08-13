@@ -1,12 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/more"
-        android:title="More"
-        android:contentDescription="Click to view more options"
-        android:icon="@drawable/baseline_more_vert_24"
-        android:iconTint="@color/black"
-        app:showAsAction="ifRoom" />
-
 </menu>

@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         topAppbar = findViewById(R.id.topAppBar);
         bottomNavigationView = findViewById(R.id.bottomnav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        topAppbar.setTitle("Orders");
         loadFragment(new OrdersFragment());
 
     }
@@ -70,19 +69,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.orders:
                 fragment = new OrdersFragment();
-                topAppbar.setTitle("Orders");
+                //topAppbar.setTitle("Orders");
                 break;
             case R.id.record:
                 fragment = new RecordFragment();
-                topAppbar.setTitle("Record");
+                //topAppbar.setTitle("Record");
                 break;
             case R.id.customers:
                 fragment = new CustomersFragment();
-                topAppbar.setTitle("Customers");
+                //topAppbar.setTitle("Customers");
                 break;
             case R.id.settings:
                 fragment = new SettingsFragment();
-                topAppbar.setTitle("Settings");
+                //topAppbar.setTitle("Settings");
                 break;
         }
         if (fragment != null) {
