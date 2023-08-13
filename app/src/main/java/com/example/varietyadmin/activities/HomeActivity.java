@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.varietyadmin.R;
@@ -25,6 +28,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
     MaterialToolbar topAppbar;
+
+    MenuItem menuItem;
 
     Handler h = new Handler();
     private boolean keep = true;
@@ -50,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 //        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         topAppbar = findViewById(R.id.topAppBar);
+        topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
         bottomNavigationView = findViewById(R.id.bottomnav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         loadFragment(new OrdersFragment());
@@ -69,19 +75,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.orders:
                 fragment = new OrdersFragment();
-                //topAppbar.setTitle("Orders");
+                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
                 break;
             case R.id.record:
                 fragment = new RecordFragment();
-                //topAppbar.setTitle("Record");
+                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
                 break;
             case R.id.customers:
                 fragment = new CustomersFragment();
-                //topAppbar.setTitle("Customers");
+                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.VISIBLE);
                 break;
             case R.id.settings:
                 fragment = new SettingsFragment();
-                //topAppbar.setTitle("Settings");
+                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
                 break;
         }
         if (fragment != null) {

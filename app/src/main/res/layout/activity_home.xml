@@ -17,7 +17,7 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/top_app_bar"
+            app:menu="@menu/customer_top_app_bar_items"
             app:titleTextColor="@color/black"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:theme="@style/MyThemeOverlay_Toolbar"
@@ -45,7 +45,7 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemRippleColor="#E1E1E1"
-        android:paddingBottom="15dp">
+        android:paddingBottom="10dp">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

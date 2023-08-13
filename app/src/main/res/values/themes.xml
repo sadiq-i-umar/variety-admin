@@ -14,4 +14,7 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/variety_logo</item>
         <item name="postSplashScreenTheme">@style/Theme.VarietyAdmin</item>
     </style>
+    <style name="MyEdgeOverlayTheme">
+        <item name="android:colorEdgeEffect">#8bc34a</item>
+    </style>
 </resources>
