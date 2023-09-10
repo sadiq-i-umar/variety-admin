@@ -1,66 +1,93 @@
 package com.example.varietyadmin.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.varietyadmin.R;
+import com.example.varietyadmin.activities.AddCustomerActivity;
+import com.example.varietyadmin.adapter.CustomerAdapter;
+import com.example.varietyadmin.adapter.OrderAdapter;
+import com.example.varietyadmin.api.RetrofitClient;
+import com.example.varietyadmin.models.Customer;
+import com.example.varietyadmin.models.CustomersResponse;
+import com.example.varietyadmin.models.Order;
+import com.example.varietyadmin.models.OrdersResponse;
+import com.google.android.material.appbar.MaterialToolbar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrdersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class OrdersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    int count = 0;
+    private RecyclerView orderRecyclerView;
+    private OrderAdapter orderAdapter;
+    private List<Order> orderList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private NestedScrollView nestedSV;
+    private ProgressBar loadingPB;
 
-    public OrdersFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OrdersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OrdersFragment newInstance(String param1, String param2) {
-        OrdersFragment fragment = new OrdersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private MaterialToolbar topAppBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_orders, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        nestedSV = view.findViewById(R.id.idNestedSV);
+
+        loadingPB = view.findViewById(R.id.idPBLoading);
+
+        topAppBar = getActivity().findViewById(R.id.topAppBar);
+
+        orderRecyclerView = view.findViewById(R.id.orderRecyclerView);
+        orderRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        Call<OrdersResponse> call = RetrofitClient.getInstance().getApi().getAllOrdersWithCustName();
+
+        loadingPB.setVisibility(View.VISIBLE);
+        call.enqueue(new Callback<OrdersResponse>() {
+            @Override
+            public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
+                orderList = response.body().getOrders();
+                orderAdapter = new OrderAdapter(orderList, getActivity());
+                orderRecyclerView.setAdapter(orderAdapter);
+                loadingPB.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<OrdersResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 }

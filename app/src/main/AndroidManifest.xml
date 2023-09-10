@@ -15,9 +15,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AddCustomerActivity"
-            android:theme="@style/Theme.VarietyAdmin"
+            android:name=".activities.SelectExistingCustomer"
+            android:exported="false"
+            android:theme="@style/Theme.VarietyAdmin" />
+        <activity
+            android:name=".activities.CustomerDetailsActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.AddCustomerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VarietyAdmin" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"

@@ -1,5 +1,7 @@
 package com.example.varietyadmin.activities;
 
+import static android.view.View.GONE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -58,7 +61,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
         bottomNavigationView = findViewById(R.id.bottomnav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        loadFragment(new OrdersFragment());
+        Boolean state = getIntent().getBooleanExtra("fromSelectCustomer", false);
+        int customer_id = getIntent().getIntExtra("cust_id", 0);
+        if (state) {
+            bottomNavigationView.setSelectedItemId(R.id.record);
+            loadFragment(new RecordFragment());
+        } else {
+            loadFragment(new OrdersFragment());
+        }
 
     }
 
@@ -99,5 +109,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout, fragment).commit();
+    }
+
+    public void addCustomerFromRecordFragment(View v) {
+        Intent intent = new Intent(this, AddCustomerActivity.class);
+        startActivity(intent);
+    }
+
+    public void selectCustomerFromRecordFragment(View v) {
+        Intent intent = new Intent(this, SelectExistingCustomer.class);
+        startActivity(intent);
     }
 }

@@ -1,10 +1,12 @@
 package com.example.varietyadmin.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,17 +15,19 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.varietyadmin.R;
+import com.example.varietyadmin.activities.HomeActivity;
 import com.example.varietyadmin.activities.SelectExistingCustomer;
 import com.example.varietyadmin.models.Customer;
 
 import java.util.List;
 
-public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
+public class SelectExistingCustomerAdapter extends RecyclerView.Adapter<SelectExistingCustomerAdapter.CustomerViewHolder> {
 
     private List<Customer> customerList;
     private Context mCtx;
+    private LinearLayout custLinearLayout;
 
-    public CustomerAdapter(List<Customer> customerList, Context mCtx) {
+    public SelectExistingCustomerAdapter(List<Customer> customerList, Context mCtx) {
         this.customerList = customerList;
         this.mCtx = mCtx;
     }
@@ -40,6 +44,15 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         Customer customer = customerList.get(position);
 
         holder.name.setText(customer.getName());
+        holder.customerCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mCtx, HomeActivity.class);
+                intent.putExtra("cust_id", customerList.get(position).getId());
+                intent.putExtra("fromSelectCustomer", true);
+                mCtx.startActivity(intent);
+            }
+        });
     }
 
     @Override
