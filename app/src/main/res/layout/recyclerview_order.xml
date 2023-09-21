@@ -60,13 +60,34 @@
             android:textColor="#FF0000"
             android:text="Unfulfilled" />
 
+        <ImageView
+            android:id="@+id/cardCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_calendar_month_24"
+            android:layout_toLeftOf="@id/cardDate"
+            android:layout_marginRight="3dp" />
+
+        <TextView
+            android:id="@+id/cardDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24 May 2023"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+
         <TextView
             android:id="@+id/cardCollectionMethod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Delivery"
             android:textStyle="bold"
             android:textColor="#74343C"
+            android:layout_below="@id/cardDate"
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:textSize="17sp" />

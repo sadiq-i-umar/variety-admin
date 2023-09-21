@@ -8,14 +8,16 @@ public class Order {
     private String collection_method;
     private String collection_status;
     private String payment_status;
+    private String date;
 
-    public Order(int id, String customer_name, String items, String collection_method, String collection_status, String payment_status) {
+    public Order(int id, String name, String items, String collection_method, String collection_status, String payment_status, String date) {
         this.id = id;
         this.name = name;
         this.items = items;
         this.collection_method = collection_method;
         this.collection_status = collection_status;
         this.payment_status = payment_status;
+        this.date = date;
     }
 
     public int getId() {
@@ -26,12 +28,12 @@ public class Order {
         this.id = id;
     }
 
-    public String getCustomer_name() {
+    public String getName() {
         return name;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.name = customer_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getItems() {
@@ -64,5 +66,13 @@ public class Order {
 
     public void setPayment_status(String payment_status) {
         this.payment_status = payment_status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

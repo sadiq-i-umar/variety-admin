@@ -12,7 +12,10 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +36,9 @@ import com.example.varietyadmin.models.Order;
 import com.example.varietyadmin.models.OrdersResponse;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,6 +54,8 @@ public class OrdersFragment extends Fragment {
 
     private NestedScrollView nestedSV;
     private ProgressBar loadingPB;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private MaterialToolbar topAppBar;
 
@@ -70,9 +78,12 @@ public class OrdersFragment extends Fragment {
         orderRecyclerView = view.findViewById(R.id.orderRecyclerView);
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Call<OrdersResponse> call = RetrofitClient.getInstance().getApi().getAllOrdersWithCustName();
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+
+        Call<OrdersResponse> call = RetrofitClient.getInstance().getApi().getAllOrdersWithDate();
 
         loadingPB.setVisibility(View.VISIBLE);
+
         call.enqueue(new Callback<OrdersResponse>() {
             @Override
             public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
@@ -85,6 +96,27 @@ public class OrdersFragment extends Fragment {
             @Override
             public void onFailure(Call<OrdersResponse> call, Throwable t) {
 
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                call.clone().enqueue(new Callback<OrdersResponse>() {
+                    @Override
+                    public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
+                        orderList = response.body().getOrders();
+                        orderAdapter = new OrderAdapter(orderList, getActivity());
+                        orderRecyclerView.setAdapter(orderAdapter);
+                        loadingPB.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrdersResponse> call, Throwable t) {
+
+                    }
+                });
             }
         });
 

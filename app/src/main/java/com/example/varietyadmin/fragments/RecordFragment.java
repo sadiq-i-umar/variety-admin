@@ -1,6 +1,10 @@
 package com.example.varietyadmin.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,6 +35,7 @@ import com.example.varietyadmin.models.CustomersResponse;
 import com.example.varietyadmin.models.LoginResponse;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,14 +60,16 @@ public class RecordFragment extends Fragment {
 
     private EditText itemsEditText;
     private RadioGroup myRadioGroup;
-    private RadioButton radioButton;
-    private Button selectExistingBtn, submitBtn;
+    private RadioButton radioButton, pickUpRadioButton, deliveryRadioButton;
+    private Button selectDateBtn, addCustomerButton, selectExistingBtn, submitBtn;
 
     private List<Customer> customerList;
 
-    private TextView customerName;
+    private TextView customerName, selectedDateTV;
 
     private LinearLayout custLinearLayout;
+
+    private ImageView customerIcon;
 
     public RecordFragment() {
         // Required empty public constructor
@@ -105,10 +114,29 @@ public class RecordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         itemsEditText = view.findViewById(R.id.itemsEditText);
         myRadioGroup = view.findViewById(R.id.radioGroup);
+        pickUpRadioButton = view.findViewById(R.id.pickUpRadioButton);
+        deliveryRadioButton = view.findViewById(R.id.deliveryRadioButton);
         submitBtn = view.findViewById(R.id.submitButton);
         selectExistingBtn = view.findViewById(R.id.existingCustomerButton);
         custLinearLayout = view.findViewById(R.id.custLinearLayout);
         customerName = view.findViewById(R.id.customerName);
+        addCustomerButton = view.findViewById(R.id.addCustomerButton);
+        customerIcon = view.findViewById(R.id.customerIcon);
+        selectDateBtn = view.findViewById(R.id.selectDateBtn);
+        selectedDateTV = view.findViewById(R.id.selectedDateTV);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String orderItems = sharedPreferences.getString("orderItems", "");
+        int checkedButtonId = sharedPreferences.getInt("checkedButtonId", -1);
+
+        itemsEditText.setText(orderItems);
+
+        if (checkedButtonId == 1) {
+            pickUpRadioButton.setChecked(true);
+        } else if (checkedButtonId == 2) {
+            deliveryRadioButton.setChecked(true);
+        }
 
         Boolean state = getActivity().getIntent().getBooleanExtra("fromSelectCustomer", false);
         int cust_id = getActivity().getIntent().getIntExtra("cust_id", 0);
@@ -134,17 +162,100 @@ public class RecordFragment extends Fragment {
             });
         }
 
+        selectDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting
+                // our day, month and year.
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // on below line we are creating a variable for date picker dialog.
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        // on below line we are passing context.
+                        getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our text view.
+//                                if (dayOfMonth < 10 && monthOfYear < 10) {
+//                                    selectedDateTV.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+//                                }
+//                                if (dayOfMonth < 10 && monthOfYear >= 10) {
+//                                    selectedDateTV.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+//                                }
+//                                if (dayOfMonth >= 10 && monthOfYear < 10) {
+//                                    selectedDateTV.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+//                                }
+                                if (dayOfMonth < 10 && monthOfYear < 9) {
+                                    selectedDateTV.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                                }
+                                if (dayOfMonth < 10 && monthOfYear > 8) {
+                                    selectedDateTV.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                                }
+                                if (dayOfMonth > 10 && monthOfYear < 9) {
+                                    selectedDateTV.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                }
+                                if (dayOfMonth > 10 && monthOfYear > 8) {
+                                    selectedDateTV.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                }
+                                selectedDateTV.setVisibility(View.VISIBLE);
+                            }
+                        },
+                        // on below line we are passing year,
+                        // month and day for selected date in our date picker.
+                        year, month, day);
+                // at last we are calling show to
+                // display our date picker dialog.
+                datePickerDialog.show();
+            }
+        });
+
+        addCustomerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddCustomerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        selectExistingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SelectExistingCustomer.class);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("orderItems", itemsEditText.getText().toString());
+                int buttonId = myRadioGroup.getCheckedRadioButtonId();
+                radioButton = view.findViewById(buttonId);
+                if (buttonId % 2 == 1) {
+                    editor.putInt("checkedButtonId", 1);
+                } else if (buttonId % 2 == 0) {
+                    editor.putInt("checkedButtonId", 2);
+                } else if (buttonId == -1) {
+                    editor.putInt("checkedButtonId", -1);
+                }
+                editor.commit();
+                startActivity(intent);
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String items = itemsEditText.getText().toString();
-                int buttonId = myRadioGroup.getCheckedRadioButtonId();
-                radioButton = view.findViewById(buttonId);
+                int radioButtonId = myRadioGroup.getCheckedRadioButtonId();
+                radioButton = view.findViewById(radioButtonId);
+                String date = selectedDateTV.getText().toString();
                 String collection_method = radioButton.getText().toString();
                 Call<LoginResponse> call = RetrofitClient
                         .getInstance()
                         .getApi()
-                        .createorder(items, collection_method, cust_id);
+                        .createorderwithdate(items, collection_method, cust_id, date);
 
                 call.enqueue(new Callback<LoginResponse>() {
                     @Override
@@ -172,4 +283,15 @@ public class RecordFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("orderItems", "");
+        editor.putInt("checkedButtonId", -1);
+        getActivity().getIntent().putExtra("cust_id", 0);
+        getActivity().getIntent().putExtra("fromSelectCustomer", false);
+        editor.commit();
+    }
 }

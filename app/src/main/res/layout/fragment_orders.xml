@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swiperefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.OrdersFragment">
+<androidx.core.widget.NestedScrollView
     android:id="@+id/idNestedSV"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/MyEdgeOverlayTheme"
-    tools:context=".fragments.OrdersFragment">
+    android:theme="@style/MyEdgeOverlayTheme">
 
     <!--linear layout for displaying
         our recycler view-->
@@ -33,3 +37,4 @@
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

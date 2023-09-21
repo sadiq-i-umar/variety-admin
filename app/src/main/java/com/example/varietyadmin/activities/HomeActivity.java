@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -111,13 +112,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout, fragment).commit();
     }
 
-    public void addCustomerFromRecordFragment(View v) {
-        Intent intent = new Intent(this, AddCustomerActivity.class);
-        startActivity(intent);
-    }
-
-    public void selectCustomerFromRecordFragment(View v) {
-        Intent intent = new Intent(this, SelectExistingCustomer.class);
-        startActivity(intent);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean fromOrderDetails = sharedPreferences.getBoolean("fromOrderDetails", false);
+        if (fromOrderDetails) {
+            editor.putBoolean("fromOrderDetails", false);
+            editor.commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout, new OrdersFragment()).commit();
+        }
     }
 }
