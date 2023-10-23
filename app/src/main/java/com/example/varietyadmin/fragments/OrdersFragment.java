@@ -1,8 +1,11 @@
 package com.example.varietyadmin.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -59,6 +62,8 @@ public class OrdersFragment extends Fragment {
 
     private MaterialToolbar topAppBar;
 
+    private boolean fromUnpaidOrders;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +73,10 @@ public class OrdersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String previousOrderList = sharedPreferences.getString("previousOrderList", "");
 
         nestedSV = view.findViewById(R.id.idNestedSV);
 
@@ -81,21 +90,85 @@ public class OrdersFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
         Call<OrdersResponse> call = RetrofitClient.getInstance().getApi().getAllOrdersWithDate();
+        Call<OrdersResponse> unpaidOrdersCall = RetrofitClient.getInstance().getApi().getUnpaidOrders();
 
         loadingPB.setVisibility(View.VISIBLE);
 
-        call.enqueue(new Callback<OrdersResponse>() {
+        if (previousOrderList.equals("") || previousOrderList.equals("all")) {
+            call.enqueue(new Callback<OrdersResponse>() {
+                @Override
+                public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
+                    orderList = response.body().getOrders();
+                    orderAdapter = new OrderAdapter(orderList, getActivity());
+                    orderRecyclerView.setAdapter(orderAdapter);
+                    loadingPB.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(Call<OrdersResponse> call, Throwable t) {
+
+                }
+            });
+        } else if (previousOrderList.equals("unpaid")) {
+            unpaidOrdersCall.clone().enqueue(new Callback<OrdersResponse>() {
+                @Override
+                public void onResponse(Call<OrdersResponse> unpaidOrdersCall, Response<OrdersResponse> response) {
+                    orderList = response.body().getOrders();
+                    orderAdapter = new OrderAdapter(orderList, getActivity());
+                    orderRecyclerView.setAdapter(orderAdapter);
+                    loadingPB.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(Call<OrdersResponse> unpaidOrdersCall, Throwable t) {
+
+                }
+            });
+        }
+
+        topAppBar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
-                orderList = response.body().getOrders();
-                orderAdapter = new OrderAdapter(orderList, getActivity());
-                orderRecyclerView.setAdapter(orderAdapter);
-                loadingPB.setVisibility(View.GONE);
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                loadingPB.setVisibility(View.VISIBLE);
+                call.clone().enqueue(new Callback<OrdersResponse>() {
+                    @Override
+                    public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
+                        orderList = response.body().getOrders();
+                        orderAdapter = new OrderAdapter(orderList, getActivity());
+                        orderRecyclerView.setAdapter(orderAdapter);
+                        loadingPB.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrdersResponse> call, Throwable t) {
+
+                    }
+                });
+                return false;
             }
+        });
 
+        //On clicking Unpaid
+        topAppBar.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public void onFailure(Call<OrdersResponse> call, Throwable t) {
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                unpaidOrdersCall.clone().enqueue(new Callback<OrdersResponse>() {
+                    @Override
+                    public void onResponse(Call<OrdersResponse> unpaidOrdersCall, Response<OrdersResponse> response) {
+                        orderList = response.body().getOrders();
+                        orderAdapter = new OrderAdapter(orderList, getActivity());
+                        orderRecyclerView.setAdapter(orderAdapter);
+                        loadingPB.setVisibility(View.GONE);
+                        editor.putString("previousOrderList", "unpaid");
+                        editor.commit();
+                    }
 
+                    @Override
+                    public void onFailure(Call<OrdersResponse> unpaidOrdersCall, Throwable t) {
+
+                    }
+                });
+                return false;
             }
         });
 
@@ -122,4 +195,12 @@ public class OrdersFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("previousOrderList", "");
+        editor.commit();
+    }
 }

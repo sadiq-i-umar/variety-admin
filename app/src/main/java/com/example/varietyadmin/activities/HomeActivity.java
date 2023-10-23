@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 //        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         topAppbar = findViewById(R.id.topAppBar);
-        topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
+        topAppbar.getMenu().getItem(0).setVisible(false);
         bottomNavigationView = findViewById(R.id.bottomnav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         Boolean state = getIntent().getBooleanExtra("fromSelectCustomer", false);
@@ -86,19 +86,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.orders:
                 fragment = new OrdersFragment();
-                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
+                topAppbar.getMenu().getItem(0).setVisible(false);
+                topAppbar.getMenu().getItem(1).setVisible(true);
                 break;
             case R.id.record:
                 fragment = new RecordFragment();
-                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
+                topAppbar.getMenu().getItem(0).setVisible(false);
+                topAppbar.getMenu().getItem(1).setVisible(false);
                 break;
             case R.id.customers:
                 fragment = new CustomersFragment();
-                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.VISIBLE);
+                topAppbar.getMenu().getItem(0).setVisible(false);
                 break;
             case R.id.settings:
                 fragment = new SettingsFragment();
-                topAppbar.findViewById(R.id.addCustomerItem).setVisibility(View.INVISIBLE);
+                topAppbar.getMenu().getItem(0).setVisible(false);
+                topAppbar.getMenu().getItem(1).setVisible(false);
                 break;
         }
         if (fragment != null) {

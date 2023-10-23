@@ -59,6 +59,9 @@ public interface Api {
     @GET("getallorderswithdate")
     Call<OrdersResponse> getAllOrdersWithDate();
 
+    @GET("getunpaidorders")
+    Call<OrdersResponse> getUnpaidOrders();
+
     @PUT("changestatustopaid/{id}")
     Call<LoginResponse> changestatustopaid(@Path("id") int id);
 

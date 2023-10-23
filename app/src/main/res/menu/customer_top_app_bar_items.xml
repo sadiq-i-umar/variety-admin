@@ -7,4 +7,26 @@
         android:icon="@drawable/baseline_person_add_alt_1_24"
         app:showAsAction="ifRoom">
     </item>
+
+    <group
+        android:id="@+id/dotteditemgroup"
+        android:title="Dotted Menu"
+        android:icon="@drawable/baseline_more_vert_24">
+
+        <item
+            android:id="@+id/allOrdersItem"
+            android:title="All Orders">
+        </item>
+
+        <item
+            android:id="@+id/paidOrdersItem"
+            android:title="Paid">
+        </item>
+
+        <item
+            android:id="@+id/unpaidOrdersItem"
+            android:title="Unpaid">
+        </item>
+
+    </group>
 </menu>
