@@ -38,6 +38,8 @@ import com.example.varietyadmin.models.CustomersResponse;
 import com.example.varietyadmin.models.Order;
 import com.example.varietyadmin.models.OrdersResponse;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,6 +93,12 @@ public class OrdersFragment extends Fragment {
 
         Call<OrdersResponse> call = RetrofitClient.getInstance().getApi().getAllOrdersWithDate();
         Call<OrdersResponse> unpaidOrdersCall = RetrofitClient.getInstance().getApi().getUnpaidOrders();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference myRef = database.getReference("messages");
+
+        myRef.setValue("Hello from our Course!");
 
         loadingPB.setVisibility(View.VISIBLE);
 

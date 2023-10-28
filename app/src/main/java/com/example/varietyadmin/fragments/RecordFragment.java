@@ -200,7 +200,7 @@ public class RecordFragment extends Fragment {
                                 if (dayOfMonth > 10 && monthOfYear < 9) {
                                     selectedDateTV.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                                 }
-                                if (dayOfMonth > 10 && monthOfYear > 8) {
+                                if (dayOfMonth >= 10 && monthOfYear > 8) {
                                     selectedDateTV.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                                 }
                                 selectedDateTV.setVisibility(View.VISIBLE);

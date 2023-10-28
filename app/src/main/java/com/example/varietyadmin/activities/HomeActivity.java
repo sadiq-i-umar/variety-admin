@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -28,6 +29,11 @@ import com.example.varietyadmin.fragments.RecordFragment;
 import com.example.varietyadmin.fragments.SettingsFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
@@ -54,6 +60,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        DatabaseReference myRef = database.getReference("newmessage");
+
+        myRef.setValue("Realtime");
 
 //        Window w = getWindow();
 //        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -88,20 +100,29 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new OrdersFragment();
                 topAppbar.getMenu().getItem(0).setVisible(false);
                 topAppbar.getMenu().getItem(1).setVisible(true);
+                topAppbar.getMenu().getItem(2).setVisible(true);
+                topAppbar.getMenu().getItem(3).setVisible(true);
                 break;
             case R.id.record:
                 fragment = new RecordFragment();
                 topAppbar.getMenu().getItem(0).setVisible(false);
                 topAppbar.getMenu().getItem(1).setVisible(false);
+                topAppbar.getMenu().getItem(2).setVisible(false);
+                topAppbar.getMenu().getItem(3).setVisible(false);
                 break;
             case R.id.customers:
                 fragment = new CustomersFragment();
-                topAppbar.getMenu().getItem(0).setVisible(false);
+                topAppbar.getMenu().getItem(0).setVisible(true);
+                topAppbar.getMenu().getItem(1).setVisible(false);
+                topAppbar.getMenu().getItem(2).setVisible(false);
+                topAppbar.getMenu().getItem(3).setVisible(false);
                 break;
             case R.id.settings:
                 fragment = new SettingsFragment();
                 topAppbar.getMenu().getItem(0).setVisible(false);
                 topAppbar.getMenu().getItem(1).setVisible(false);
+                topAppbar.getMenu().getItem(2).setVisible(false);
+                topAppbar.getMenu().getItem(3).setVisible(false);
                 break;
         }
         if (fragment != null) {

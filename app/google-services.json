@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1013459211512",
-    "project_id": "variety-admin-66d71",
-    "storage_bucket": "variety-admin-66d71.appspot.com"
+    "project_number": "1019028509809",
+    "project_id": "variety-admin-d16c2",
+    "storage_bucket": "variety-admin-d16c2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013459211512:android:c7cdd905d908f0ab5a170d",
+        "mobilesdk_app_id": "1:1019028509809:android:31dd0139978c3e6b8e37d0",
         "android_client_info": {
           "package_name": "com.example.varietyadmin"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAH9F5FPDg7nIJ5EalS3p2VS9GX0M5f33U"
+          "current_key": "AIzaSyBTuw879P1F9hoBG0Z40yzqBfI0D9gDUT8"
         }
       ],
       "services": {
