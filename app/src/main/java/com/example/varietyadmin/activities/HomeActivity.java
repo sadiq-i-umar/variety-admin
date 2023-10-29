@@ -102,6 +102,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 topAppbar.getMenu().getItem(1).setVisible(true);
                 topAppbar.getMenu().getItem(2).setVisible(true);
                 topAppbar.getMenu().getItem(3).setVisible(true);
+                topAppbar.getMenu().getItem(4).setVisible(true);
                 break;
             case R.id.record:
                 fragment = new RecordFragment();
@@ -109,6 +110,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 topAppbar.getMenu().getItem(1).setVisible(false);
                 topAppbar.getMenu().getItem(2).setVisible(false);
                 topAppbar.getMenu().getItem(3).setVisible(false);
+                topAppbar.getMenu().getItem(4).setVisible(false);
                 break;
             case R.id.customers:
                 fragment = new CustomersFragment();
@@ -116,6 +118,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 topAppbar.getMenu().getItem(1).setVisible(false);
                 topAppbar.getMenu().getItem(2).setVisible(false);
                 topAppbar.getMenu().getItem(3).setVisible(false);
+                topAppbar.getMenu().getItem(4).setVisible(false);
                 break;
             case R.id.settings:
                 fragment = new SettingsFragment();
@@ -123,6 +126,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 topAppbar.getMenu().getItem(1).setVisible(false);
                 topAppbar.getMenu().getItem(2).setVisible(false);
                 topAppbar.getMenu().getItem(3).setVisible(false);
+                topAppbar.getMenu().getItem(4).setVisible(false);
                 break;
         }
         if (fragment != null) {

@@ -62,6 +62,9 @@ public interface Api {
     @GET("getunpaidorders")
     Call<OrdersResponse> getUnpaidOrders();
 
+    @GET("gettransactions")
+    Call<OrdersResponse> gettransactions();
+
     @PUT("changestatustopaid/{id}")
     Call<LoginResponse> changestatustopaid(@Path("id") int id);
 

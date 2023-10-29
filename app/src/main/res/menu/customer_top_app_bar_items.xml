@@ -28,5 +28,10 @@
             android:title="Unpaid">
         </item>
 
+        <item
+            android:id="@+id/receiptsItem"
+            android:title="Receipts">
+        </item>
+
     </group>
 </menu>

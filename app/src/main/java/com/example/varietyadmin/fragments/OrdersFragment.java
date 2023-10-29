@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -176,6 +177,15 @@ public class OrdersFragment extends Fragment {
 
                     }
                 });
+                return false;
+            }
+        });
+
+        //On clicking receipts
+        topAppBar.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
                 return false;
             }
         });
